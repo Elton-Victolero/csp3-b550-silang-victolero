@@ -10,21 +10,18 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
-import Products from './pages/Products';
+import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
 
 function App() {
-  const [user, setUser] = useState({
-    id: null,
-    isAdmin: null
-  });
+  const [user, setUser] = useState({});
 
   function unsetUser(){
     localStorage.clear();
   };
 
   useEffect(() => {
-    fetch("https://myr5j4i3c2.execute-api.us-west-2.amazonaws.com/production/users/details", {
+    fetch(`${process.env.REACT_APP_API_URL}/users/details`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
@@ -55,7 +52,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
-            <Route path="/active" element={<Products />} />
+            <Route path="/active" element={<ProductList />} />
             <Route path="/:productId" element={<ProductDetails />} />
           </Routes>
         </Container>

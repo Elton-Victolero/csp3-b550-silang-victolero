@@ -15,7 +15,7 @@ export default function Login() {
   function authenticate(e) {
 	  e.preventDefault();
 
-		fetch("https://myr5j4i3c2.execute-api.us-west-2.amazonaws.com/production/users/login",{
+		fetch(`${process.env.REACT_APP_API_URL}/users/login`,{
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"

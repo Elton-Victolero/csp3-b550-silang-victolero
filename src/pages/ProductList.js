@@ -7,9 +7,11 @@ export default function ProductList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${process.env.API_URL}/products/active`)
+    fetch(`${process.env.REACT_APP_API_URL}/products/active`)
       .then(res => res.json())
-      .then(data => setProducts(data))
+      .then(data => {
+        setProducts(data)
+      })
   }, []);
 
   const viewDetails = (productId) => {

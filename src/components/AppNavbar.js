@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function AppNavbar() {
   const {user} = useContext(UserContext);
+  console.log(user)
   return (
     <Navbar expand="lg" className="bg-primary">
       <Container fluid>
@@ -14,6 +15,7 @@ export default function AppNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link as={NavLink} to="/" exact="true">Home</Nav.Link>
+            <Nav.Link as={NavLink} to="/active" exact="true">Products</Nav.Link>
             {
               user.id
               ?

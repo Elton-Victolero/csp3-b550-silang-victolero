@@ -20,7 +20,7 @@ export default function Register() {
 	function registerUser(e) {
 		e.preventDefault();
 
-		fetch("https://myr5j4i3c2.execute-api.us-west-2.amazonaws.com/production/users/register",{
+		fetch(`${process.env.REACT_APP_API_URL}/users/register`,{
       method: 'POST',
       headers: {
           "Content-Type": "application/json"
