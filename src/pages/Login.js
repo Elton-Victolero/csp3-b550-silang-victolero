@@ -73,7 +73,7 @@ export default function Login() {
 
   return (
     user.id !== null
-      ? <Navigate to="/" />
+      ? <Navigate to="/active" />
       : <Container className="mt-3">
           <Row className="justify-content-center">
             <Col xs={12} md={6} lg={5}>

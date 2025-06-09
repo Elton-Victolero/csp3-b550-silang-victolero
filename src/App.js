@@ -28,7 +28,7 @@ function App() {
     })
     .then(res => res.json())
     .then(data => {
-      if (data && data._id && data.isAdmin){
+      if (typeof data !== "undefined"){
         setUser({
           id: data._id,
           isAdmin: data.isAdmin
