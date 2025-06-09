@@ -5,6 +5,10 @@ import { Container } from 'react-bootstrap';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 
+//pages and components imports
+import Products from './pages/Products';
+import ProductDetails from './pages/ProductDetails';
+
 function App() {
   return (
     <UserProvider>
@@ -12,7 +16,8 @@ function App() {
         {/*<AppNavbar />*/}
         <Container>
           <Routes>
-            
+            <Route path="/active" element={<Products />} />
+            <Route path="/:productId" element={<ProductDetails />} />
           </Routes>
         </Container>
       </Router>
