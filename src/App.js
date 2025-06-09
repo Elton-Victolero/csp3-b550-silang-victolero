@@ -10,6 +10,8 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
+import Products from './pages/Products';
+import ProductDetails from './pages/ProductDetails';
 
 function App() {
   const [user, setUser] = useState({
@@ -53,6 +55,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/active" element={<Products />} />
+            <Route path="/:productId" element={<ProductDetails />} />
           </Routes>
         </Container>
       </Router>
