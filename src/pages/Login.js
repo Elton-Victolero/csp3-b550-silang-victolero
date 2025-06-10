@@ -27,16 +27,19 @@ export default function Login() {
 		})
 		.then(res => res.json())
 		.then(data => {
-			if(data.access){
-				localStorage.setItem("token", data.access);
-				retrieveUserDetails(data.access);
+      if(data.access){
+        localStorage.setItem("token", data.access);
 
-				Swal.fire({
-    	    title: "Login Successful",
-    	    icon: "success"
-      	});
-        	setEmail("");
-        	setPassword("");
+        Swal.fire({
+          title: "Login Successful",
+          icon: "success"
+        })
+        .then(() => {
+          retrieveUserDetails(data.access);
+          setEmail("");
+          setPassword("");
+        });
+        
 			}else{
 				Swal.fire({
           title: "Authentication failed",
@@ -48,7 +51,7 @@ export default function Login() {
   }
 
   const retrieveUserDetails = (token) => {
-    fetch("https://myr5j4i3c2.execute-api.us-west-2.amazonaws.com/production/users/details", {
+    fetch(`${process.env.REACT_APP_API_URL}/users/details`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -73,7 +76,7 @@ export default function Login() {
 
   return (
     user.id !== null
-      ? <Navigate to="/active" />
+      ? <Navigate to="/products" />
       : <Container className="mt-3">
           <Row className="justify-content-center">
             <Col xs={12} md={6} lg={5}>
