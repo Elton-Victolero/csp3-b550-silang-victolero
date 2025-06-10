@@ -13,6 +13,7 @@ import Logout from "./pages/Logout";
 import ProductMain from "./pages/ProductMain";
 import ProductDetails from './pages/ProductDetails';
 import AddProduct from './pages/AddProduct';
+import CartView from "./pages/CartView";
 
 function App() {
   const [user, setUser] = useState({
@@ -67,6 +68,7 @@ function App() {
             <Route path="/products" element={<ProductMain />} />
             <Route path="/products/:productId" element={<ProductDetails />} />
             <Route path="/addProduct" element={<AddProduct />} />
+            <Route path="/cart" element={<CartView />} />
           </Routes>
         </Container>
       </Router>
