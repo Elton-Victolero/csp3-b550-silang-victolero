@@ -27,6 +27,7 @@ export default function AppNavbar() {
                 </>
               :
                 <>
+                  <Nav.Link as={NavLink} to="/get-cart" exact="true">Cart</Nav.Link>
                   <Nav.Link as={NavLink} to="/logout" exact="true">Logout</Nav.Link>
                 </>
             :
