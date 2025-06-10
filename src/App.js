@@ -10,11 +10,15 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
+import ProductMain from "./pages/ProductMain";
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
 
 function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    id: null,
+    isAdmin: null
+  });
 
   function unsetUser(){
     localStorage.clear();
@@ -28,7 +32,8 @@ function App() {
     })
     .then(res => res.json())
     .then(data => {
-      if (typeof data !== "undefined"){
+      console.log("data:", data)
+      if (typeof data._id !== "undefined" && typeof data.isAdmin !== "undefined"){
         setUser({
           id: data._id,
           isAdmin: data.isAdmin
@@ -40,6 +45,13 @@ function App() {
         });
       }
     })
+    .catch(err => {
+      console.error("User fetch error:", err.message);
+      setUser({
+        id: null,
+        isAdmin: null
+      });
+    });
   }, [])
 
   return (
@@ -52,6 +64,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/products" element={<ProductMain />} />
             <Route path="/active" element={<ProductList />} />
             <Route path="/:productId" element={<ProductDetails />} />
           </Routes>
