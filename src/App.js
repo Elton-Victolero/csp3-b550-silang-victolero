@@ -10,8 +10,10 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
+import Products from "./pages/Products";
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
+import AddProduct from './pages/AddProduct';
 
 function App() {
   const [user, setUser] = useState({});
@@ -52,8 +54,10 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
-            <Route path="/active" element={<ProductList />} />
-            <Route path="/:productId" element={<ProductDetails />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/productList" element={<ProductList />} />
+            <Route path="/productDetails" element={<ProductDetails />} />
+            <Route path="/addProduct" element={<AddProduct />} />
           </Routes>
         </Container>
       </Router>

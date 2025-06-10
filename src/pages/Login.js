@@ -48,7 +48,7 @@ export default function Login() {
   }
 
   const retrieveUserDetails = (token) => {
-    fetch("https://myr5j4i3c2.execute-api.us-west-2.amazonaws.com/production/users/details", {
+    fetch(`${process.env.REACT_APP_API_URL}/users/details`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
