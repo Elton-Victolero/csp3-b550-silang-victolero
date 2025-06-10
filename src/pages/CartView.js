@@ -11,9 +11,12 @@ export default function CartView() {
 
   const fetchProducts = useCallback(() => {
     fetch(`${process.env.REACT_APP_API_URL}/products/active`)
-      .then(res => res.json())
-      .then(data => setProducts(data));
-  }, []);
+    .then(res => res.json())
+    .then(data => {
+      console.log("data:", data)
+      setProducts(data);
+    });
+  }, [])
 
   const fetchCart = useCallback(() => {
     if (!user.id) return;
@@ -29,13 +32,21 @@ export default function CartView() {
           setCartItems(data.cartItems);
           setTotalPrice(data.totalPrice || 0);
         } else {
-          Swal.fire('Cart fetch failed', data.message || 'Unable to load cart.', 'error');
+          Swal.fire({
+            title: 'Cart fetch failed',
+            text: data.message || 'Unable to load cart.',
+            icon: 'error',
+          });
         }
       })
       .catch(() => {
-        Swal.fire('Error', 'Something went wrong while fetching the cart.', 'error');
+        Swal.fire({
+          title: 'Error',
+          text: 'Something went wrong while fetching the cart.',
+          icon: 'error',
+        });
       });
-  }, [user.id]);
+    }, [user.id])
 
   useEffect(() => {
     fetchProducts();
@@ -96,6 +107,7 @@ export default function CartView() {
 
   return (
     <Container className="text-center mt-4">
+
       <h1 className="mb-4"><b>Your Shopping Cart</b></h1>
 
       <Table striped bordered hover responsive>
@@ -156,6 +168,7 @@ export default function CartView() {
           </Button>
         </div>
       )}
+  
     </Container>
   );
 }
