@@ -53,8 +53,8 @@ export default function ToggleCourse({product, fetchData}) {
   return(
     product.isActive
     ?
-      <Button variant="danger" size="sm" className="mx-1" onClick={() => archiveToggle()}>Archive</Button>
+      <Button variant="danger" size="sm" onClick={() => archiveToggle()}>Archive</Button>
     :
-      <Button variant="success" size="sm" className="mx-1" onClick={() => activateToggle()}>Activate</Button>
+      <Button variant="success" size="sm" onClick={() => activateToggle()}>Activate</Button>
   )
 }

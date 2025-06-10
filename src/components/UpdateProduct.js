@@ -58,7 +58,7 @@ export default function UpdateProduct({product, fetchData}) {
 
 	return(
     <>
-    <Button variant="primary" size="sm" className="mx-1" onClick={() => openEdit()}> Edit </Button>
+    <Button variant="primary" size="sm" onClick={() => openEdit()}> Edit </Button>
 
     <Modal show={showEdit} onHide={closeEdit}>
       <Form onSubmit={e => editProduct(e, productId)}>
