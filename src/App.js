@@ -65,7 +65,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/products" element={<ProductMain />} />
-            <Route path="/productDetails" element={<ProductDetails />} />
+            <Route path="/products/:productId" element={<ProductDetails />} />
             <Route path="/addProduct" element={<AddProduct />} />
           </Routes>
         </Container>

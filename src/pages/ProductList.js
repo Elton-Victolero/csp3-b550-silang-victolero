@@ -15,7 +15,7 @@ export default function ProductList() {
   }, []);
 
   const viewDetails = (productId) => {
-    navigate(`/${productId}`);
+    navigate(`/products/${productId}`);
   };
 
   return (
