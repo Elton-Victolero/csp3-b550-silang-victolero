@@ -1,10 +1,10 @@
 import Banner from '../components/Banner';
 
-export default function Placeholder() {
+export default function Error() {
 
     const data = {
-        title: "Placeholder",
-        content: "This is a placeholder page for an admin's view of the Orders page.",
+        title: "404 - Not found",
+        content: "The page you are looking for cannot be found",
         destination: "/",
         buttonLabel: "Back home"
     }
