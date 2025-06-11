@@ -97,7 +97,7 @@ export default function UpdateProduct({product, fetchData}) {
 
         <Modal.Footer>
           <Button variant="secondary" onClick={closeEdit}>Close</Button>
-          <Button variant="success" type="submit">Submit</Button>
+          <Button variant="primary" type="submit">Submit</Button>
         </Modal.Footer>
       </Form>
     </Modal>

@@ -6,14 +6,15 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 
 import AppNavbar from "./components/AppNavbar";
+import ProductDetails from './components/ProductDetails';
+import AddProduct from './components/AddProduct';
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
-import ProductMain from "./pages/ProductMain";
-import ProductDetails from './pages/ProductDetails';
-import AddProduct from './pages/AddProduct';
+import Products from "./pages/Products";
 import CartView from './pages/CartView';
+import Orders from "./pages/Orders"
 
 function App() {
   const [user, setUser] = useState({
@@ -65,10 +66,11 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
-            <Route path="/products" element={<ProductMain />} />
+            <Route path="/products" element={<Products />} />
             <Route path="/products/:productId" element={<ProductDetails />} />
             <Route path="/addProduct" element={<AddProduct />} />
-            <Route path="/get-cart" element={<CartView />} />
+            <Route path="/cart" element={<CartView />} />
+            <Route path="/orders" element={<Orders />} />
           </Routes>
         </Container>
       </Router>
