@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, useCallback } from 'react';
 import { Table, Container, Button, ButtonGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import UserContext from '../UserContext';
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom"
@@ -108,47 +109,46 @@ export default function CartView() {
     });
   };
 
-const checkout = () => {
-  Swal.fire({
-    title: 'Confirm Checkout',
-    text: 'Are you sure you want to place this order?',
-    icon: 'question',
-    showCancelButton: true,
-    confirmButtonText: 'Yes, place order',
-    cancelButtonText: 'Cancel'
-  }).then(result => {
-    if (result.isConfirmed) {
-      fetch(`${process.env.REACT_APP_API_URL}/orders/checkout`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.message === "Ordered Successfully") {
-          return fetch(`${process.env.REACT_APP_API_URL}/cart/clear-cart`, {
-            method: 'PUT',
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-          });
-        }else{
-          throw new Error(data.error || "Checkout failed");
-        }
-      })
-      .then(() => {
-        fetchCart(); // Refresh cart state
-        Swal.fire('Success', 'Order placed.', 'success');
-      })
-      .then(() => navigate("/orders"))
-      .catch(err => {
-        Swal.fire('Error', err.message || 'Something went wrong.', 'error');
-      })
-    }
-  });
-};
-
+  const checkout = () => {
+    Swal.fire({
+      title: 'Confirm Checkout',
+      text: 'Are you sure you want to place this order?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, place order',
+      cancelButtonText: 'Cancel'
+    }).then(result => {
+      if (result.isConfirmed) {
+        fetch(`${process.env.REACT_APP_API_URL}/orders/checkout`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.message === "Ordered Successfully") {
+            return fetch(`${process.env.REACT_APP_API_URL}/cart/clear-cart`, {
+              method: 'PUT',
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+              }
+            });
+          }else{
+            throw new Error(data.error || "Checkout failed");
+          }
+        })
+        .then(() => {
+          fetchCart(); // Refresh cart state
+          Swal.fire('Success', 'Order placed.', 'success');
+        })
+        .then(() => navigate("/orders"))
+        .catch(err => {
+          Swal.fire('Error', err.message || 'Something went wrong.', 'error');
+        })
+      }
+    });
+  };
 
   return (
     <Container className="text-center mt-4">
@@ -173,7 +173,16 @@ const checkout = () => {
             return (
               <tr key={item.productId}>
                 <td>{product?.name || "Product not found"}</td>
-                <td className="d-none d-lg-table-cell">{product?.price?.toFixed(2) || "0.00"}</td>
+                <td>
+                  {product?._id ? (
+                    <Link to={`/products/${product._id}`}>
+                      {product.name}
+                    </Link>
+                  ) : (
+                    "Product not found"
+                  )}
+                </td>
+                <td>{product?.price?.toFixed(2) || "0.00"}</td>
                 <td>
                   <ButtonGroup size="sm">
                     <Button variant="outline-secondary" onClick={() => updateQuantity(item.productId, currentQty - 1)}>-</Button>
@@ -199,8 +208,8 @@ const checkout = () => {
         {cartItems.length > 0 && (
           <tfoot>
             <tr>
-              <td colSpan="2" className="text-end fw-bold">Total:</td>
-              <td colSpan="3" className="fw-bold">₱ {totalPrice.toFixed(2)}</td>
+              <td colSpan="3" className="text-end fw-bold">Total:</td>
+              <td className="fw-bold">₱ {totalPrice.toFixed(2)}</td>
             </tr>
           </tfoot>
         )}
