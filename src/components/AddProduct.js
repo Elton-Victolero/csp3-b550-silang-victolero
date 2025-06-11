@@ -55,9 +55,7 @@ export default function AddProduct({ fetchProductData }) {
 
   return (
     <>
-      <div className="text-center my-4">
-        <Button variant="primary" onClick={openAdd}>Add Product</Button>
-      </div>
+      <Button variant="primary" className="mx-2" onClick={openAdd}>Add Product</Button>
 
       <Modal show={showAdd} onHide={closeAdd}>
         <Form onSubmit={createProduct}>

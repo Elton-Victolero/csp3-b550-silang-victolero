@@ -172,7 +172,7 @@ export default function CartView() {
                     "Product not found"
                   )}
                 </td>
-                <td>{product?.price?.toFixed(2) || "0.00"}</td>
+                <td className="d-none d-lg-table-cell">{product?.price?.toFixed(2) || "0.00"}</td>
                 <td>
                   <ButtonGroup size="sm">
                     <Button variant="outline-secondary" onClick={() => updateQuantity(item.productId, currentQty - 1)}>-</Button>
@@ -198,8 +198,8 @@ export default function CartView() {
         {cartItems.length > 0 && (
           <tfoot>
             <tr>
-              <td colSpan="3" className="text-end fw-bold">Total:</td>
-              <td className="fw-bold">₱ {totalPrice.toFixed(2)}</td>
+              <td colSpan="1" className="text-center fw-bold">Total:</td>
+              <td colSpan="4" className="fw-bold">₱ {totalPrice.toFixed(2)}</td>
             </tr>
           </tfoot>
         )}

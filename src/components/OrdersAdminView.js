@@ -58,7 +58,6 @@ export default function OrdersAdminView() {
 
   return (
     <div className="container mt-4">
-      <h2 className="text-center mb-4">Orders Admin Dashboard</h2>
       <Accordion>
         {Object.entries(orders).map(([userId, userOrders], index) => (
           <Accordion.Item eventKey={index.toString()} key={userId}>
