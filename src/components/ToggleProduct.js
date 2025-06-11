@@ -1,11 +1,10 @@
 import { Button } from 'react-bootstrap';
 import { Notyf } from 'notyf';
 
-export default function ToggleCourse({product, fetchData}) {
+export default function ToggleCourse({ product, fetchProductData }) {
   const notyf = new Notyf();
-  const token = localStorage.getItem("token")
-
   const productId = product._id;
+  const token = localStorage.getItem("token")
 
   const archiveToggle = () => {
     fetch(`${process.env.REACT_APP_API_URL}/products/${productId}/archive`, {
@@ -20,11 +19,11 @@ export default function ToggleCourse({product, fetchData}) {
       console.log(data)
       if(data.success === true) {
         notyf.success(data.message)
-        fetchData();
+        fetchProductData();
 
       }else {
         notyf.error(data.error)
-        fetchData();
+        fetchProductData();
       }
     })
   }
@@ -42,10 +41,10 @@ export default function ToggleCourse({product, fetchData}) {
       console.log(data)
       if(data.success === true) {
         notyf.success(data.message)
-        fetchData();
+        fetchProductData();
       }else{
         notyf.error(data.error)
-        fetchData();
+        fetchProductData();
       }
     })
   }

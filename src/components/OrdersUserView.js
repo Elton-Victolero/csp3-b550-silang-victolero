@@ -1,18 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import UserContext from "../UserContext";
 import { Card, Spinner, Table } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
 export default function OrdersUserView() {
-  const [orders, setOrders] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { products, fetchProductData } = useContext(UserContext);
 
-  const fetchProducts = () => {
-    return fetch(`${process.env.REACT_APP_API_URL}/products/active`)
-      .then(res => res.json())
-      .then(data => setProducts(data))
-      .catch(() => Swal.fire('Error', 'Failed to fetch active products', 'error'));
-  };
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchOrders = () => {
     return fetch(`${process.env.REACT_APP_API_URL}/orders/my-orders`, {
@@ -35,9 +30,9 @@ export default function OrdersUserView() {
   };
 
   useEffect(() => {
-    Promise.all([fetchProducts(), fetchOrders()])
+    Promise.all([fetchProductData(), fetchOrders()])
       .finally(() => setLoading(false));
-  }, []);
+  }, [fetchProductData]);
 
   const getProductName = (productId) => {
     const product = products.find(p => p._id === productId);
@@ -69,9 +64,9 @@ export default function OrdersUserView() {
               <Table striped bordered hover responsive size="sm" className="align-middle">
                 <thead>
                   <tr className="text-center">
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
+                    <th style={{width: "75%"}}>Product</th>
+                    <th style={{width: "10%"}}>Quantity</th>
+                    <th style={{width: "15%"}}>Subtotal</th>
                   </tr>
                 </thead>
                 <tbody>

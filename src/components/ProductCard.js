@@ -16,7 +16,7 @@ export default function ProductCard({ data }) {
           <Card.Text>{data.description}</Card.Text>
           <Card.Text>PhP {data.price.toFixed(2)}</Card.Text>
         </Card.Body>
-        <Card.Footer>
+        <Card.Footer className="py-3">
           <Button variant="primary" onClick={viewDetails}>View Details</Button>
         </Card.Footer>
       </Card>

@@ -1,8 +1,8 @@
-import {useState} from "react";
+import { useState } from "react";
 import { Button, Modal, Form } from 'react-bootstrap';
 import { Notyf } from 'notyf';
 
-export default function UpdateProduct({product, fetchData}) {
+export default function UpdateProduct({ product, fetchProductData }) {
   const notyf = new Notyf();
 
 	const productId = product._id;
@@ -47,11 +47,11 @@ export default function UpdateProduct({product, fetchData}) {
 			if(data.success === true) {
 			  notyf.success(data.message)
 			  closeEdit();
-			  fetchData();
+			  fetchProductData();
 			}else{
 			  notyf.error(data.error)
 			  closeEdit();
-			  fetchData();
+			  fetchProductData();
 			}
 		})
 	}

@@ -1,13 +1,12 @@
 import './App.css';
 import { UserProvider } from './UserContext';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Container } from 'react-bootstrap';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 
 import AppNavbar from "./components/AppNavbar";
 import ProductDetails from './components/ProductDetails';
-import AddProduct from './components/AddProduct';
 import Error from "./pages/Error"
 import Home from "./pages/Home";
 import Register from "./pages/Register";
@@ -15,7 +14,8 @@ import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import Products from "./pages/Products";
 import CartView from './pages/CartView';
-import Orders from "./pages/Orders"
+import Orders from "./pages/Orders";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   const [user, setUser] = useState({
@@ -27,7 +27,22 @@ function App() {
     localStorage.clear();
   };
 
-  useEffect(() => {
+  const [products, setProducts] = useState([]);
+  const fetchProductData = useCallback(() => {
+      let fetchUrl = user.isAdmin === true ? `${process.env.REACT_APP_API_URL}/products/all` : `${process.env.REACT_APP_API_URL}/products/active`
+      fetch(fetchUrl, {
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log("data:", data)
+          setProducts(data);
+      });
+  }, [user.isAdmin]);
+
+  const fetchUserData = useCallback(() => {
     fetch(`${process.env.REACT_APP_API_URL}/users/details`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -56,9 +71,13 @@ function App() {
       });
     });
   }, [])
+  
+  useEffect(() => {
+    Promise.all([fetchUserData(), fetchProductData()])
+  }, [fetchUserData, fetchProductData])
 
   return (
-    <UserProvider value={{user, setUser, unsetUser}}>
+    <UserProvider value={{user, setUser, unsetUser, fetchProductData, products}}>
       <Router>
         <AppNavbar />
         <Container>
@@ -70,9 +89,9 @@ function App() {
             <Route path="/logout" element={<Logout />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:productId" element={<ProductDetails />} />
-            <Route path="/addProduct" element={<AddProduct />} />
             <Route path="/cart" element={<CartView />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/dashboard" element={<AdminDashboard />} />
           </Routes>
         </Container>
       </Router>

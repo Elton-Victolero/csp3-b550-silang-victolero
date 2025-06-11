@@ -5,9 +5,10 @@ import { Container, Card, Button, Row, Col, InputGroup, FormControl } from 'reac
 import Swal from "sweetalert2";
 
 export default function ProductDetails() {
-	const { productId } = useParams();
 	const navigate = useNavigate();
-	const {user} = useContext(UserContext);
+	
+	const { user } = useContext(UserContext);
+	const { productId } = useParams();
 
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
@@ -81,20 +82,23 @@ export default function ProductDetails() {
 							<Card.Text>₱ {price}</Card.Text>
 						</Card.Body>
 						
-						<Card.Body className="text-center">
-							<InputGroup className="justify-content-center mb-3" style={{ maxWidth: '200px', margin: '0 auto' }}>
-							  <Button variant="outline-secondary" onClick={decrement}>-</Button>
-							  <FormControl
-							    type="number"
-							    value={quantity}
-							    min={1}
-							    onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-							    className="text-center"
-							  />
-							  <Button variant="outline-primary" onClick={increment}>+</Button>
-							</InputGroup>
-							<Button variant="primary" className="mx-1" onClick={addToCart}>Add to cart</Button>
-						</Card.Body>
+						{user.isAdmin === false &&
+							<Card.Body className="text-center">
+								<InputGroup className="justify-content-center mb-3" style={{ maxWidth: '200px', margin: '0 auto' }}>
+								  <Button variant="outline-secondary" onClick={decrement}>-</Button>
+								  <FormControl
+								    type="number"
+								    value={quantity}
+								    min={1}
+								    onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+								    className="text-center"
+								  />
+								  <Button variant="outline-primary" onClick={increment}>+</Button>
+								</InputGroup>
+								<Button variant="primary" className="mx-1" onClick={addToCart}>Add to cart</Button>
+							</Card.Body>
+						}
+						
 						
 						<Card.Body className="text-center">
 							<Button variant="secondary" className="mx-1" onClick={() => navigate("/products/")}>Back</Button>

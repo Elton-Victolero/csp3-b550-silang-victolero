@@ -16,18 +16,27 @@ export default function AppNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link as={NavLink} to="/" className="text-white">Home</Nav.Link>
-            <Nav.Link as={NavLink} to="/products" className="text-white">Products</Nav.Link>
             {user.id !== null
             ?
               <>
-                {!user.isAdmin &&
-                  <Nav.Link as={NavLink} to="/cart" className="text-white">Cart</Nav.Link>
+                {user.isAdmin === true
+                ?
+                  <>
+                    <Nav.Link as={NavLink} to="/dashboard" className="text-white">Dashboard</Nav.Link>
+                    <Nav.Link as={NavLink} to="/logout" className="text-white">Logout</Nav.Link>
+                  </>
+                :
+                  <>
+                    <Nav.Link as={NavLink} to="/products" className="text-white">Products</Nav.Link>
+                    <Nav.Link as={NavLink} to="/cart" className="text-white">Cart</Nav.Link>
+                    <Nav.Link as={NavLink} to="/orders" className="text-white">Orders</Nav.Link>
+                    <Nav.Link as={NavLink} to="/logout" className="text-white">Logout</Nav.Link>
+                  </>
                 }
-                <Nav.Link as={NavLink} to="/orders" className="text-white">Orders</Nav.Link>
-                <Nav.Link as={NavLink} to="/logout" className="text-white">Logout</Nav.Link>
               </>
             :
               <>
+                <Nav.Link as={NavLink} to="/products" className="text-white">Products</Nav.Link>
                 <Nav.Link as={NavLink} to="/login" className="text-white">Login</Nav.Link>
                 <Nav.Link as={NavLink} to="/register" className="text-white">Register</Nav.Link>
               </>

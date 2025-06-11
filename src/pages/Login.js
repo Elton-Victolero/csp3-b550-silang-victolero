@@ -76,7 +76,15 @@ export default function Login() {
 
   return (
     user.id !== null
-      ? <Navigate to="/products" />
+      ? 
+        <>
+          {user.isAdmin === true
+          ?
+            <Navigate to="/dashboard" />
+          :
+            <Navigate to="/products" />
+          }
+        </>
       : <Container className="mt-3">
           <Row className="justify-content-center">
             <Col xs={12} md={6} lg={5}>

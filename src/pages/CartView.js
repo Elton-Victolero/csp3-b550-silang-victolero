@@ -8,19 +8,10 @@ import { useNavigate } from "react-router-dom"
 export default function CartView() {
   const navigate = useNavigate();
 
-  const { user } = useContext(UserContext);
-  const [products, setProducts] = useState([]);
+  const { user, products, fetchProductData } = useContext(UserContext);
+  
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-
-  const fetchProducts = useCallback(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/products/active`)
-    .then(res => res.json())
-    .then(data => {
-      console.log("data:", data)
-      setProducts(data);
-    });
-  }, [])
 
   const fetchCart = useCallback(() => {
     if (!user.id) return;
@@ -53,9 +44,9 @@ export default function CartView() {
     }, [user.id])
 
   useEffect(() => {
-    fetchProducts();
+    fetchProductData();
     fetchCart();
-  }, [fetchProducts, fetchCart]);
+  }, [fetchProductData, fetchCart]);
 
   const getProductDetails = (id) => products.find(p => p._id === id);
 
@@ -172,7 +163,6 @@ export default function CartView() {
 
             return (
               <tr key={item.productId}>
-                <td>{product?.name || "Product not found"}</td>
                 <td>
                   {product?._id ? (
                     <Link to={`/products/${product._id}`}>
@@ -226,7 +216,7 @@ export default function CartView() {
 
           <div className="ms-auto">
             <Button variant="primary" onClick={checkout}>
-              Proceed to Checkout
+              Checkout
             </Button>
           </div>
         </div>

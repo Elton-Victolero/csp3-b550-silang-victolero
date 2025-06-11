@@ -1,40 +1,22 @@
-import { useEffect, useState, useContext, useCallback } from 'react';
-import UserContext from '../UserContext';
-import ProductListUser from "../components/ProductListUser";
-import ProductListAdmin from "../components/ProductListAdmin";
+import { useContext, useEffect } from 'react';
+import UserContext from "../UserContext";
+import { Container, Row } from 'react-bootstrap';
+import ProductCard from '../components/ProductCard';
 
-export default function Products() {
-	const {user} = useContext(UserContext);
-	
-	const [products, setProducts] = useState([]);
-	
-	const fetchData = useCallback(() => {
-	    let fetchUrl = user.isAdmin === true ? `${process.env.REACT_APP_API_URL}/products/all` : `${process.env.REACT_APP_API_URL}/products/active`
-	    fetch(fetchUrl, {
-	        headers: {
-	            Authorization: `Bearer ${localStorage.getItem("token")}`
-	        }
-	    })
-	    .then(res => res.json())
-	    .then(data => {
-	    	console.log("data:", data)
-	        setProducts(data);
-	    });
-	}, [user.isAdmin]);
+export default function ProductListUser() {
+  const { products, fetchProductData } = useContext(UserContext);
 
-	useEffect(() => {
-	    fetchData()
-	}, [fetchData]);
+  useEffect(() => {
+    fetchProductData();
+  }, [fetchProductData]);
 
-	return(
-	    <>
-      {
-        user.isAdmin === true
-        ?
-	        <ProductListAdmin productData={products} fetchData={fetchData} />
-	      :
-	        <ProductListUser productData={products} />
-      }
-	    </>
-	)
+  return (
+    <Container className="mt-5">
+      <Row className="g-4 justify-content-center">
+        {products.map(product => (
+          <ProductCard key={product._id} data={product} />
+        ))}
+      </Row>
+    </Container>
+  );
 }

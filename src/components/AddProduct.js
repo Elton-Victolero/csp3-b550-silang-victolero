@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { Notyf } from 'notyf';
 
-export default function AddProduct({fetchData}) {
+export default function AddProduct({ fetchProductData }) {
   const notyf = new Notyf();
 
   const [showAdd, setShowAdd] = useState(false);
@@ -10,18 +10,20 @@ export default function AddProduct({fetchData}) {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
 
-  const openAdd = () => {
-    setShowAdd(true);
+  const clearFields = () => {
     setName("");
     setDescription("");
     setPrice("");
+  }
+
+  const openAdd = () => {
+    clearFields();
+    setShowAdd(true);
   };
 
   const closeAdd = () => {
     setShowAdd(false);
-    setName("");
-    setDescription("");
-    setPrice("");
+    clearFields();
   };
 
   const createProduct = (e) => {
@@ -44,7 +46,7 @@ export default function AddProduct({fetchData}) {
       } else if (data && data._id) {
         notyf.success("Product created successfully!");
         closeAdd();
-        fetchData();
+        fetchProductData();
       } else {
         notyf.error("Something went wrong.");
       }
