@@ -4,6 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Card, Button, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
 import Swal from "sweetalert2";
 
+import photoData from '../data/PhotoData';
+
 export default function ProductDetails() {
 	const navigate = useNavigate();
 	
@@ -14,6 +16,8 @@ export default function ProductDetails() {
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState(0);
 	const [quantity, setQuantity] = useState(1);
+
+	const imageUrl = photoData[name] || "https://via.placeholder.com/300";
 
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`)
@@ -74,6 +78,18 @@ export default function ProductDetails() {
 			<Row>
 				<Col lg={{ span: 6, offset: 3 }}>
 					<Card>
+						<Card.Img
+						  variant="top"
+						  src={imageUrl}
+						  alt={name}
+						  className="img-fluid"
+						  style={{
+						    height: '300px',
+						    objectFit: 'cover',
+						    borderTopLeftRadius: '0.375rem',
+						    borderTopRightRadius: '0.375rem'
+						  }}
+						/>
 						<Card.Body className="text-center">
 							<Card.Title className="mb-3">{name}</Card.Title>
 							<Card.Subtitle>Description:</Card.Subtitle>
