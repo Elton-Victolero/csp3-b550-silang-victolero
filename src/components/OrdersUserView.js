@@ -22,9 +22,9 @@ export default function OrdersUserView() {
             (a, b) => new Date(b.orderedOn) - new Date(a.orderedOn)
           );
           setOrders(sortedOrders);
-        } else {
+        }/* else {
           Swal.fire('No Orders Found', data.message || '', 'info');
-        }
+        }*/
       })
       .catch(() => Swal.fire('Error', 'Failed to fetch orders', 'error'));
   };

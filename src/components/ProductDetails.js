@@ -75,10 +75,10 @@ export default function ProductDetails() {
 				<Col lg={{ span: 6, offset: 3 }}>
 					<Card>
 						<Card.Body className="text-center">
-							<Card.Title className="mb-3">{name}</Card.Title>
-							<Card.Subtitle>Description:</Card.Subtitle>
-							<Card.Text className="mb-3">{description}</Card.Text>
-							<Card.Subtitle>Price:</Card.Subtitle>
+							<Card.Title className="mb-4"><h4><b>{name}</b></h4></Card.Title>
+							<Card.Subtitle><h5>Description:</h5></Card.Subtitle>
+							<Card.Text className="mb-4">{description}</Card.Text>
+							<Card.Subtitle><h5>Price:</h5></Card.Subtitle>
 							<Card.Text>₱ {price}</Card.Text>
 						</Card.Body>
 						

@@ -28,6 +28,7 @@ function App() {
   };
 
   const [products, setProducts] = useState([]);
+  
   const fetchProductData = useCallback(() => {
       let fetchUrl = user.isAdmin === true ? `${process.env.REACT_APP_API_URL}/products/all` : `${process.env.REACT_APP_API_URL}/products/active`
       fetch(fetchUrl, {
@@ -77,7 +78,7 @@ function App() {
   }, [fetchUserData, fetchProductData])
 
   return (
-    <UserProvider value={{user, setUser, unsetUser, fetchProductData, products}}>
+    <UserProvider value={{user, fetchUserData, setUser, unsetUser, products, fetchProductData}}>
       <Router>
         <AppNavbar />
         <Container>
