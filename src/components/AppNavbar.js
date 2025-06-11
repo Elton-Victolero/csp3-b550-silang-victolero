@@ -23,6 +23,7 @@ export default function AppNavbar() {
                 ?
                   <>
                     <Nav.Link as={NavLink} to="/dashboard" className="text-white">Dashboard</Nav.Link>
+                    <Nav.Link as={NavLink} to="/orders" className="text-white">Orders</Nav.Link>
                     <Nav.Link as={NavLink} to="/logout" className="text-white">Logout</Nav.Link>
                   </>
                 :
