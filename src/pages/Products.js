@@ -1,9 +1,9 @@
 import { useEffect, useState, useContext, useCallback } from 'react';
 import UserContext from '../UserContext';
-import ProductList from "./ProductList";
-import ProductListAdmin from "./ProductListAdmin";
+import ProductListUser from "../components/ProductListUser";
+import ProductListAdmin from "../components/ProductListAdmin";
 
-export default function ProductMain() {
+export default function Products() {
 	const {user} = useContext(UserContext);
 	
 	const [products, setProducts] = useState([]);
@@ -33,7 +33,7 @@ export default function ProductMain() {
         ?
 	        <ProductListAdmin productData={products} fetchData={fetchData} />
 	      :
-	        <ProductList productData={products} />
+	        <ProductListUser productData={products} />
       }
 	    </>
 	)

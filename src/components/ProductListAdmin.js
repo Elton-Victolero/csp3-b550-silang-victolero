@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 
-import UpdateProduct from "../components/UpdateProduct";
-import ToggleProduct from "../components/ToggleProduct";
+import AddProduct from "./AddProduct";
+import UpdateProduct from "./UpdateProduct";
+import ToggleProduct from "./ToggleProduct";
 
 export default function ProductListAdmin({productData, fetchData}) {
   const [products, setProducts] = useState([])
@@ -33,6 +34,7 @@ export default function ProductListAdmin({productData, fetchData}) {
   return(
     <>
     <h1 className="text-center my-4">Admin Dashboard</h1>
+    <AddProduct fetchData={fetchData} />
     <Table striped bordered hover responsive size="sm" className="align-middle">
       <thead>
         <tr className="text-center">

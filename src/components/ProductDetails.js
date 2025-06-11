@@ -54,7 +54,7 @@ export default function ProductDetails() {
     		  text: data.message || 'Item added to cart successfully.',
     		  icon: 'success'
     		})
-    		.then(() => navigate("/products/"));
+    		.then(() => navigate("/cart"));
     	}else{
     		Swal.fire({
     			title: 'Error',
@@ -91,7 +91,7 @@ export default function ProductDetails() {
 							    onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
 							    className="text-center"
 							  />
-							  <Button variant="outline-secondary" onClick={increment}>+</Button>
+							  <Button variant="outline-primary" onClick={increment}>+</Button>
 							</InputGroup>
 							<Button variant="primary" className="mx-1" onClick={addToCart}>Add to cart</Button>
 						</Card.Body>

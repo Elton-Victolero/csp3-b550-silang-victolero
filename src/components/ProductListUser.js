@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Container, Card, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-export default function ProductList() {
+export default function ProductListUser() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 

@@ -2,8 +2,11 @@ import { useState, useEffect, useContext, useCallback } from 'react';
 import { Table, Container, Button, ButtonGroup } from 'react-bootstrap';
 import UserContext from '../UserContext';
 import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom"
 
 export default function CartView() {
+  const navigate = useNavigate();
+
   const { user } = useContext(UserContext);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -105,16 +108,58 @@ export default function CartView() {
     });
   };
 
+const checkout = () => {
+  Swal.fire({
+    title: 'Confirm Checkout',
+    text: 'Are you sure you want to place this order?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, place order',
+    cancelButtonText: 'Cancel'
+  }).then(result => {
+    if (result.isConfirmed) {
+      fetch(`${process.env.REACT_APP_API_URL}/orders/checkout`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.message === "Ordered Successfully") {
+          return fetch(`${process.env.REACT_APP_API_URL}/cart/clear-cart`, {
+            method: 'PUT',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+          });
+        }else{
+          throw new Error(data.error || "Checkout failed");
+        }
+      })
+      .then(() => {
+        fetchCart(); // Refresh cart state
+        Swal.fire('Success', 'Order placed.', 'success');
+      })
+      .then(() => navigate("/orders"))
+      .catch(err => {
+        Swal.fire('Error', err.message || 'Something went wrong.', 'error');
+      })
+    }
+  });
+};
+
+
   return (
     <Container className="text-center mt-4">
 
       <h1 className="mb-4"><b>Your Shopping Cart</b></h1>
 
-      <Table striped bordered hover responsive>
+      <Table striped bordered hover responsive size="sm" className="align-middle">
         <thead>
           <tr className="align-middle text-center">
             <th style={{ width: '55%' }}>Product Name</th>
-            <th style={{ width: '10%' }}>Price</th>
+            <th className="d-none d-lg-table-cell" style={{ width: '10%' }}>Price</th>
             <th style={{ width: '10%' }}>Quantity</th>
             <th style={{ width: '15%' }}>Subtotal</th>
             <th style={{ width: '10%' }}>Actions</th>
@@ -128,12 +173,12 @@ export default function CartView() {
             return (
               <tr key={item.productId}>
                 <td>{product?.name || "Product not found"}</td>
-                <td>{product?.price?.toFixed(2) || "0.00"}</td>
+                <td className="d-none d-lg-table-cell">{product?.price?.toFixed(2) || "0.00"}</td>
                 <td>
                   <ButtonGroup size="sm">
-                    <Button variant="secondary" onClick={() => updateQuantity(item.productId, currentQty - 1)}>-</Button>
+                    <Button variant="outline-secondary" onClick={() => updateQuantity(item.productId, currentQty - 1)}>-</Button>
                     <Button variant="light" disabled>{currentQty}</Button>
-                    <Button variant="secondary" onClick={() => updateQuantity(item.productId, currentQty + 1)}>+</Button>
+                    <Button variant="outline-primary" onClick={() => updateQuantity(item.productId, currentQty + 1)}>+</Button>
                   </ButtonGroup>
                 </td>
                 <td>{item.subtotal.toFixed(2)}</td>
@@ -154,21 +199,30 @@ export default function CartView() {
         {cartItems.length > 0 && (
           <tfoot>
             <tr>
-              <td colSpan="3" className="text-end fw-bold">Total:</td>
-              <td colSpan="2" className="fw-bold">₱ {totalPrice.toFixed(2)}</td>
+              <td colSpan="2" className="text-end fw-bold">Total:</td>
+              <td colSpan="3" className="fw-bold">₱ {totalPrice.toFixed(2)}</td>
             </tr>
           </tfoot>
         )}
       </Table>
 
       {cartItems.length > 0 && (
-        <div className="text-start">
-          <Button variant="outline-danger" onClick={clearCart}>
-            Clear Cart
-          </Button>
+        <>
+        <div className="d-flex">
+          <div className="me-auto">
+            <Button variant="outline-danger" onClick={clearCart}>
+              Clear Cart
+            </Button>
+          </div>
+
+          <div className="ms-auto">
+            <Button variant="primary" onClick={checkout}>
+              Proceed to Checkout
+            </Button>
+          </div>
         </div>
+        </>
       )}
-  
     </Container>
   );
 }
