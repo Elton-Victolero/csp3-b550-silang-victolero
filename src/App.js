@@ -81,7 +81,7 @@ function App() {
     <UserProvider value={{user, fetchUserData, setUser, unsetUser, products, fetchProductData}}>
       <Router>
         <AppNavbar />
-        <Container>
+        <Container fluid className="app-bg">
           <Routes>
             <Route path="*" element={<Error />} />
             <Route path="/" element={<Home />} />

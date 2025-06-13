@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.app-bg {
+  background-image: url('https://videos.openai.com/vg-assets/assets%2Ftask_01jxkgjsasefra0dg1fhya20v1%2F1749780435_img_0.webp?st=2025-06-13T00%3A27%3A32Z&se=2025-06-19T01%3A27%3A32Z&sks=b&skt=2025-06-13T00%3A27%3A32Z&ske=2025-06-19T01%3A27%3A32Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=8ebb0df1-a278-4e2e-9c20-f2d373479b3a&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=kspLPszzjq26HgnqWglciu2KW53FBgC90TVdMYU1boI%3D&az=oaivgprodscus');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+}
